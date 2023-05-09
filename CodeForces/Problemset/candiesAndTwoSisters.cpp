@@ -52,24 +52,22 @@ using namespace std;
 
 int main(){
 
-    int t, n, a, b;
+    int t, n;
 
     cin >> t;
 
     while(t != 0)
     {
         cin >> n;
-        a = n;
-        b = 0;
-    
-        while(a > b)
-        {
-            a--;
-            b++;
-        }
-        b--;
 
-        cout << b;
+        if(n % 2 == 0 and n / 2 != 0)
+        {
+            n--;
+        }
+        
+        n = n / 2;
+
+        cout << n << "\n";
 
         t--;
     }
