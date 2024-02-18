@@ -14,7 +14,7 @@ int main(){
         sort(v.begin(), v.end());
 
         int ans=v[1] - v[0];
-        for(int i=1; i<n; i++){
+        for(int i=2; i<n; i++){
             if(v[i] - v[i-1] < ans){
                 ans = v[i] - v[i-1];
             }
@@ -22,7 +22,6 @@ int main(){
 
         cout << ans << endl;
     }
-
 
     return 0;
 }
