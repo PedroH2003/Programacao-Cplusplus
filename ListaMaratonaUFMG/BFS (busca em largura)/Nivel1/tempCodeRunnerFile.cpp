@@ -1,0 +1,1 @@
+cout << v.first << " " << v.second << " " << dist[v.first][v.second] << endl;

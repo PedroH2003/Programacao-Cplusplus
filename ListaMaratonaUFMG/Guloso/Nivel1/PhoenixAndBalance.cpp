@@ -13,7 +13,7 @@ int main(){
         vector<int> moedas(n);
 
         for(int i=0; i<n; i++) moedas[i] = pow(2, i+1);
-        sort(moedas.begin(), moedas.end());
+        sort(moedas.begin(), moedas.end()); // Não precisava disso
 
         a += moedas[n-1];
         int i=0;
@@ -30,9 +30,6 @@ int main(){
         cout << ans << endl;
 
     }
-    
 
-
-    
     return 0;
 }
