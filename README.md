@@ -1,3 +1,3 @@
-# Programação em C++ :computer:
+# Programação em C++
 
-Olá ! Aqui você encontrará alguns exercícios / programas feitos na linguagem C++. :smile:
+Alguns exercícios de programação feitos na linguagem C++.
