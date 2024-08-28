@@ -4,6 +4,7 @@ using namespace std;
 
 const int MAX = 110;
 vector<vector<pair<int,int>>> g(MAX);
+vector<vector<pair<int,int>>> confere(MAX);
 int vis[MAX];
 int dist[MAX];
 
@@ -21,7 +22,7 @@ int bfs(int s){
 
         if(v == s){
             for(auto u: g[v]){
-                if(!vis[u.second] and u.first != -1){   
+                if(!vis[u.second]){   
                     dist[u.second] = u.first; 
                     q.push({u.first, u.second});
                 }
@@ -29,15 +30,18 @@ int bfs(int s){
         }
         else{
             for(auto u: g[v]){
-                if(!vis[u.second] and u.first != -1 and u.second != v){
+                if(!vis[u.second] and u.second != v){
                     int w = d + u.first;
                     if(w < dist[u.second]){
                         return -1;
                     }
                     else if(w == dist[u.second]){
-                        g[s][u.second].first = -1;
-                        g[u.second][s].first = -1;
-                        ans++;
+
+                        if(confere[s][u.second].first != -1 and confere[u.second][s].first != -1){
+                            confere[s][u.second].first = -1;
+                            confere[u.second][s].first = -1;
+                            ans++;
+                        }   
                     }
                 }
 
@@ -55,6 +59,7 @@ int main(){
         for(int j=0; j<n; j++){
             int x; cin >> x;
             g[i].push_back({x, j});
+            confere[i].push_back({x,j});
         }
     }
 
