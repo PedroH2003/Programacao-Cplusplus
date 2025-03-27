@@ -11,7 +11,16 @@ const int mod = 1e9+7;
 const int MAX = 1e3+10;
 
 int main() { _
-    
+
+    int n,k; cin >> n >> k;
+    vector<int> v(n); REP(i, 0, n) cin >> v[i];
+    vector<int> aux(k); REP(i, 0, k) cin >> aux[i];
+
+    REP(i, 0, k){
+        auto num = lower_bound(v.begin(), v.end(), aux[i]);
+        if(*num == aux[i]) cout << "YES" << endl;
+        else cout << "NO" << endl;
+    }
 
     return 0;
 }
