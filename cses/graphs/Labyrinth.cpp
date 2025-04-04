@@ -2,64 +2,61 @@
 
 using namespace std;
 
-const int MAX = 1010;
 const int INF = 0x3f3f3f3f;
+const int MAX = 1e4+10;
+
+int n,m;
+pair<int,int> ini,fim;
 char M[MAX][MAX];
 int vis[MAX][MAX];
-int dist[MAX][MAX];
+char caminho[MAX][MAX];
 pair<int,int> pai[MAX][MAX];
-vector<pair<int,int>> mov = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-int n,m;
-pair<int,int> ini;
-string seq="";
+vector<pair<int,int>> mov = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
 
 bool val(pair<int,int> u){
-    return u.first >= 0 and u.first < n and u.second >= 0 and u.second < m 
+    return u.first >= 0 and u.second >= 0 and u.first < n and u.second < m
     and !vis[u.first][u.second] and M[u.first][u.second] != '#';
 }
 
-void find_seq(pair<int,int> fim){
-    while(fim != ini){
-        pair<int,int> aux = pai[fim.first][fim.second];
-        if(aux.first != fim.first){
-            if(aux.first < fim.first) seq += 'D';
-            else seq += 'U';
-        }
-        else if(aux.second != fim.second){
-            if(aux.second < fim.second) seq += 'R';
-            else seq += 'L';
-        }
-        fim = aux;
-    }
-    reverse(seq.begin(), seq.end());
-}
-
-int bfs(pair<int,int> s){
+void bfs(pair<int,int> s){
     queue<pair<int,int>> q; q.push(s);
     vis[s.first][s.second] = 1;
-    vis[s.first][s.second] = 0;
-    pai[s.first][s.second] = s;
-
+    
     while(!q.empty()){
         pair<int,int> v = q.front(); q.pop();
 
-        if(M[v.first][v.second] == 'B'){
-            find_seq(v);
-            return dist[v.first][v.second];
-        }
+        for(int i=0; i<mov.size(); i++){
+            char dir;
+            if(i == 0) dir = 'L';
+            else if(i == 1) dir = 'R';
+            else if(i == 2) dir = 'U';
+            else dir = 'D';
 
-        for(auto u: mov){
+            pair<int,int> u = mov[i]; 
             u.first += v.first; u.second += v.second;
+
             if(val(u)){
                 vis[u.first][u.second] = 1;
-                dist[u.first][u.second] = dist[v.first][v.second] + 1;
-                pai[u.first][u.second] = v;
                 q.push(u);
+                caminho[u.first][u.second] = dir;
+                pai[u.first][u.second] = v;
             }
         }
     }
+}
 
-    return -1;
+vector<char> path(pair<int,int> v){
+    vector<char> ans;
+    if(vis[v.first][v.second]){
+        char aux;
+        while(v != ini){
+            aux = caminho[v.first][v.second];
+            ans.push_back(aux);
+            v = pai[v.first][v.second];
+        }
+        reverse(ans.begin(), ans.end());
+    }
+    return ans;
 }
 
 int main(){
@@ -69,17 +66,18 @@ int main(){
         for(int j=0; j<m; j++){
             cin >> M[i][j];
             if(M[i][j] == 'A') ini = {i, j};
+            if(M[i][j] == 'B') fim = {i, j};
         }
     }
-    int ans = bfs(ini);
-    if(ans != -1){
-        cout << "YES" << endl;
-        cout << ans << endl;
-        cout << seq << endl;
-    }
+    bfs(ini);
+    vector<char> ans = path(fim);
+    if(ans.size() == 0) cout << "NO" << endl;
     else{
-        cout << "NO" << endl;
+        cout << "YES" << endl;
+        cout << ans.size() << endl;
+        for(auto u: ans) cout << u;
+        cout << endl;
     }
-    
+
     return 0;
 }

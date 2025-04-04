@@ -2,13 +2,8 @@
 
 using namespace std;
 
-const int INF = 0x3f3f3f3f;
-const int MAX = 1e5+10;
-int n;
-vector<int> a(MAX),b(MAX),c(MAX);
-long long memo[MAX][4];
-
 int main(){
+
     int n; cin >> n;
     vector<int> dp(3);
 
@@ -26,7 +21,8 @@ int main(){
         }
         dp = new_dp;
     }
-    int ans = max(dp[0], max(dp[1], dp[2]));
+    int ans = 0;
+    for(int i=0; i<3; i++) ans = max(ans, dp[i]);
     cout << ans << endl;
 
     return 0;

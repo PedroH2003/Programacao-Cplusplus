@@ -5,37 +5,44 @@ using namespace std;
 int main(){
 
     int n; cin >> n;
-    vector<int> v(n); for(int i=0; i<n; i++) v[i] = i+1;
     vector<int> ans;
 
-    for(int i=1; i<n; i+=2){
-        ans.push_back(i+1);
-    }
-    for(int i=0; i<n; i+=2){
-        ans.push_back(i+1);
-    }
+    if(n % 2 == 0 and n != 4){
+        int aux1,aux2; aux1 = aux2 = n/2;
 
-    if(n == 2 or n == 3) cout << "NO SOLUTION" << endl;
+        int i=n;
+        while(aux1--){
+            ans.push_back(i);
+            i -= 2;
+        }
+        i = n-1;
+        while(aux2--){
+            ans.push_back(i);
+            i -= 2;
+        }
+    }
+    else if(n != 4){
+        int aux1,aux2; aux1 = aux2 = n/2;
+        aux1++;
+
+        int i=n;
+        while(aux1--){
+            ans.push_back(i);
+            i -= 2;
+        }
+        i = n-1;
+        while(aux2--){
+            ans.push_back(i);
+            i -= 2;
+        }
+    }
     else{
-        for(auto u: ans) cout << u << " ";
-        cout << endl;        
-    }    
+        ans = {2, 4, 1, 3};
+    }
 
-    // int flag=1;
-    // for(int i=1; i<n; i++){
-    //     if(abs(ans[i] - ans[i-1]) == 1){
-    //         flag = 0;
-    //         break;
-    //     }
-    // }
-
-    // if(flag){
-    //     for(auto u: ans) cout << u << " ";
-    //     cout << endl;
-    // }
-    // else{
-    //     cout << "NO SOLUTION" << endl;
-    // }
+    if(n > 1 and n <= 3) cout << "NO SOLUTION";
+    else for(auto u: ans) cout << u << " ";
+    cout << endl;
 
     return 0;
 }

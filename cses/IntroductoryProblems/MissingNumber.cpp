@@ -2,21 +2,21 @@
 
 using namespace std;
 
-#define _ ios_base::sync_with_stdio(0); cin.tie(0);
-#define endl '\n'
-
 int main(){
 
     int n; cin >> n;
-    vector<int> v(n-1);
-    for(int i=0; i<n-1; i++) cin >> v[i];
-    sort(v.begin(), v.end());
+    unordered_set<int> ans;
 
-    int i;
-    for(i=0; i<n-1; i++){
-        if(i+1 != v[i]) break;
+    for(int i=0; i<n-1; i++){
+        int num; cin >> num;
+        ans.insert(num);
     }
-    cout << i+1 << endl;
+    for(int i=1; i<=n; i++){
+        if(ans.find(i) == ans.end()){
+            cout << i << endl;
+            break;
+        }
+    }
 
     return 0;
 }

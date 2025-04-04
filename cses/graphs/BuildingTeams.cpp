@@ -2,11 +2,14 @@
 
 using namespace std;
 
-const int MAX = 2e5+10;
+const int INF = 0x3f3f3f3f;
+const int MAX = 1e5+10;
+
+int n,m;
 vector<vector<int>> g(MAX);
+vector<int> ans(MAX, 0);
 vector<int> vis(MAX);
-vector<int> ans(MAX);
-int eh_possivel = 1;
+bool solution = true;
 
 void bfs(int s){
     queue<int> q; q.push(s);
@@ -16,45 +19,39 @@ void bfs(int s){
         int v = q.front(); q.pop();
 
         for(auto u: g[v]){
+            if(ans[u] == 0) ans[u] = ans[v] * -1;
+            if(ans[u] == ans[v]) solution = false;
+
             if(!vis[u]){
                 vis[u] = 1;
-                if(ans[v] == 1) ans[u] = 2;
-                else ans[u] = 1;
                 q.push(u);
-            }
-            else{
-                if(ans[u] == ans[v]) eh_possivel = 0;
             }
         }
     }
 }
 
 int main(){
-
-    int n,m; cin >> n >> m;
+    cin >> n >> m;
     for(int i=0; i<m; i++){
-        int x,y; cin >> x >> y; x--, y--;
-
-        g[x].push_back(y);
-        g[y].push_back(x);
+        int a,b; cin >> a >> b; a--,b--;
+        g[a].push_back(b);
+        g[b].push_back(a);
     }
 
-    for(int i=0; i<n and eh_possivel; i++){
+    for(int i=0; i<n and solution; i++){
         if(!vis[i]){
             bfs(i);
         }
     }
 
-    if(eh_possivel){
+    if(!solution) cout << "IMPOSSIBLE" << endl;
+    else{
         for(int i=0; i<n; i++){
+            if(ans[i] == -1) ans[i] = 2;
             cout << ans[i] << " ";
         }
         cout << endl;
     }
-    else{
-        cout << "IMPOSSIBLE" << endl;
-    }
-
 
     return 0;
 }

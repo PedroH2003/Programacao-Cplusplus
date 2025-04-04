@@ -1,6 +1,15 @@
 {
     "C_Cpp.errorSquiggles": "disabled",
     "files.associations": {
-        "random": "cpp"
+        "random": "cpp",
+        "xhash": "cpp",
+        "xstring": "cpp",
+        "xtree": "cpp",
+        "xutility": "cpp",
+        "ostream": "cpp",
+        "deque": "cpp",
+        "format": "cpp",
+        "list": "cpp",
+        "vector": "cpp"
     }
 }

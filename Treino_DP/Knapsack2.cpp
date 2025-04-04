@@ -2,33 +2,31 @@
 
 using namespace std;
 
-const long long INF = 0x3f3f3f3fll;
-const int MAX = 100 * 1e3;
+const int MAX = (100 * 1e3) + 10;
+const int INF = 0x3f3f3f3f;
 
 int main(){
-
     int n,w; cin >> n >> w;
-    vector<long long> dp(MAX+1, INF);
+    vector<long long> dp(MAX, INF);
+    vector<int> p(n),v(n);
 
-    vector<int> peso(n),valor(n);
-    long long soma = 0;
+    int sum = 0;
     for(int i=0; i<n; i++){
-        cin >> peso[i] >> valor[i];
-        soma += valor[i];
+        cin >> p[i] >> v[i];
+        sum += v[i];
     }
 
     dp[0] = 0;
     for(int i=0; i<n; i++){
-        int p = peso[i];
-        int v = valor[i];
+        int peso = p[i]; int valor = v[i];
 
-        for(long long j=soma; j>=v; j--){
-            dp[j] = min(dp[j], dp[j-v] + p);
+        for(int j = sum; j >= valor; j--){
+            dp[j] = min(dp[j], dp[j - valor] + peso);
         }
     }
-    
-    long long ans=0;
-    for(long long i=soma; i>=0; i--) if(dp[i] <= w){
+
+    int ans = 0;
+    for(int i = sum; i >= 0; i--) if(dp[i] <= w){
         ans = i;
         break;
     }

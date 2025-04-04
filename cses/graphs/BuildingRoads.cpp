@@ -2,7 +2,10 @@
 
 using namespace std;
 
-const int MAX = 2e5+10;
+const int INF = 0x3f3f3f3f;
+const int MAX = 1e5+10;
+
+int n,m;
 vector<vector<int>> g(MAX);
 vector<int> vis(MAX);
 
@@ -12,28 +15,28 @@ void dfs(int s){
 }
 
 int main(){
+    cin >> n >> m;
 
-    int n,m; cin >> n >> m;
     for(int i=0; i<m; i++){
-        int x,y; cin >> x >> y; x--, y--;
-
-        g[x].push_back(y);
-        g[y].push_back(x);
+        int a,b; cin >> a >> b; a--,b--;
+        g[a].push_back(b);
+        g[b].push_back(a);
     }
 
-    int k=-1;
-    vector<int> roads;
+    int aux = -1;
+    vector<pair<int,int>> ans;
     for(int i=0; i<n; i++){
         if(!vis[i]){
-            k++;
-            roads.push_back(i);
             dfs(i);
+            if(aux == -1) aux = i+1;
+            else {
+                ans.push_back({aux, i+1});
+                aux = i + 1;
+            }
         }
     }
-    cout << k << endl;
-    for(int i=1; i<roads.size(); i++){
-        cout << roads[i-1]+1 << " " << roads[i]+1 << endl;
-    }
+    cout << ans.size() << endl;
+    for(auto u: ans) cout << u.first << " " << u.second << endl;
 
     return 0;
 }
