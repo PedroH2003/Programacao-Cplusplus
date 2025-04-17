@@ -2,75 +2,54 @@
 
 using namespace std;
 
-int n,m,c,k; 
+const int INF = 0x3f3f3f3f;
 const int MAX = 260;
-const long long INF = 0x3f3f3f3f3f3f3f3f;
-vector<vector<pair<int,long long>>> g(MAX);
-bool vis[MAX];
-// vector<int> dist(MAX);
-// vector<int> servicos;
+int n,m,c,k;
+vector<vector<pair<int,int>>> g(MAX);
+int dist[MAX];
 
+void dijkstra(int s){
+    memset(dist, INF, sizeof dist);
+    priority_queue<pair<int,int>> q; q.push({0, s});
+    dist[s] = 0;
 
-int nova_rota(int v, long long d){
-    for(int i=v+1; i<c; i++){
-        for(auto u: g[i-1]){
-            if(u.first == i){
-                d += u.second;
-                break;
+    while(!q.empty()){
+        int v = q.top().second; int d = -q.top().first; q.pop();
+
+        if(d > dist[v]) continue;
+    
+        for(auto u: g[v]){
+            int w = d + u.second;
+
+            if(v < c-1){
+                if(u.first == v+1){
+                    if(dist[u.first] > w){
+                        dist[u.first] = w;
+                        q.push({-w, u.first});
+                    }
+                }
+            }
+            else{
+                if(dist[u.first] > w){
+                    dist[u.first] = w;
+                    q.push({-w, u.first});
+                }                
             }
         }
     }
-    return d;
-}
-
-int dij(int s){
-    memset(vis, 0, sizeof vis);
-    // memset(dist, INF, sizeof dist);
-    priority_queue<pair<long long,int>> q;
-    q.push({0, s}); // dist[s] = 0;
-    long long rota_servico = INF;
-
-    while(!q.empty()){
-        int v = q.top().second;
-        long long d = -(q.top().first);
-        q.pop();
-
-        if(v == c-1){
-            long long ans = min(d, rota_servico);
-            return ans;
-        }
-
-        if(v < c){
-            rota_servico = nova_rota(v, d);
-            continue;
-        }
-
-        if(vis[v]) continue;
-        vis[v] = 1;
-
-        for(auto u: g[v]){
-            long long w = -(d + u.second);
-            q.push({w, u.first});
-        }
-    }
-
 }
 
 int main(){
 
-    while(cin >> n >> m >> c >> k and n != 0){
+    while(cin >> n >> m >> c >> k and n){
         for(int i=0; i<m; i++){
-            int x,y,w; cin >> x >> y >> w;
-            g[x].push_back({y,w});
-            g[y].push_back({x,w});
+            int a,b,c; cin >> a >> b >> c;
+            g[a].push_back({b, c});
+            g[b].push_back({a, c});
         }
-        // for(int i=0; i<c; i++) servicos.push_back(i);
-        long long ans = dij(k);
-        cout << ans << endl;
-
-        //servicos.clear();
-        g.clear();
-        g.resize(MAX);
+        dijkstra(k);
+        cout << dist[c-1] << endl;
+        g.clear(); g.resize(MAX);
     }
 
     return 0;
