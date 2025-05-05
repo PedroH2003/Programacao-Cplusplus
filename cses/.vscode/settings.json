@@ -11,6 +11,11 @@
         "format": "cpp",
         "list": "cpp",
         "vector": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "chrono": "cpp",
+        "utility": "cpp",
+        "algorithm": "cpp",
+        "limits": "cpp",
+        "valarray": "cpp"
     }
 }
