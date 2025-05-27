@@ -1,13 +1,3 @@
 {
-    "C_Cpp.errorSquiggles": "disabled",
-    "files.associations": {
-        "deque": "cpp",
-        "list": "cpp",
-        "map": "cpp",
-        "unordered_map": "cpp",
-        "vector": "cpp",
-        "xhash": "cpp",
-        "xstring": "cpp",
-        "xtree": "cpp"
-    }
+    "C_Cpp.errorSquiggles": "disabled"
 }
