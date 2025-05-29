@@ -1,24 +1,22 @@
-#include <iostream>
-#include <vector>
+#include <bits/stdc++.h>
+
 using namespace std;
 
-const int MOD = 1e9 + 7;
+const int MAX = 1e6+10, MOD = 1e9 + 7;
 
 int main() {
-    int n, x;
-    cin >> n >> x;
-    vector<int> coins(n);
-    for (int i = 0; i < n; ++i) cin >> coins[i];
+    int n, x; cin >> n >> x;
+    vector<int> v(n); for(int i=0; i<n; i++) cin >> v[i];
+    vector<int> dp(MAX);
 
-    vector<int> dp(x + 1, 0);
+    sort(v.begin(), v.end());
     dp[0] = 1;
-
-    for (int i = 0; i < n; ++i) {
-        for (int j = coins[i]; j <= x; ++j) {
-            dp[j] = (dp[j] + dp[j - coins[i]]) % MOD;
+    for(auto c: v){
+        for(int i = c; i <= x; i++){
+            dp[i] = (dp[i] + dp[i - c]) % MOD;
         }
     }
-
-    cout << dp[x] << '\n';
+    cout << dp[x] << endl;
+    
     return 0;
 }
